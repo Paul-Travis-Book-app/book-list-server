@@ -49,12 +49,12 @@ app.get('/api/v1/books-limited', (req, res) => {
 });
 
 app.post('/api/v1/books', (req, res) => {
-    let SQL = `INSERT INTO books_app(book_id, title, author, isbn, image_url, description)
-    VALUES ($1, $2, $3, $4, $5, $6);`;
+    let SQL = `INSERT INTO books(title, author, isbn, image_url, description)
+    VALUES ($1, $2, $3, $4, $5);`;
 
 
     let values = [
-        req.params.id,
+        
         req.body.title,
         req.body.author,
         req.body.isbn,
@@ -71,17 +71,56 @@ app.post('/api/v1/books', (req, res) => {
     })
 })
 
+app.put('/api/v1/books/:id', (req, res) => {
+    let SQL = `UPDATE books
+    SET title=$1,
+    SET author=$2,
+    SET isbn=$3,
+    SET image_url=$4,
+    SET description=$5
+    WHERE book_id=$1
+    VALUES ($1, $2, $3, $4, $5, $6);`;
 
-app.get('/api/v1/books:id', (req, res) => {
+
+    let values = [
+        req.params.id,
+        req.body.title,
+        req.body.author,
+        req.body.isbn,
+        req.body.image_url,
+        req.body.description
+    ];
+
+    client.query(SQL, values)
+        .then(function () {
+        res.send('edit completed')
+        })
+        .catch(function (err) {
+            console.error(err);
+    })
+})
+
+
+app.get('/api/v1/books/:id', (req, res) => {
     console.log(req);
     let SQL = `
-        SELECT * FROM books WHERE book_id=$1;
+        SELECT * FROM books WHERE book_id= ${req.params.id};
         `;
-    
-        // let values = [request.body.book_id];
-    // let values = [body.book_id];
 
     client.query(SQL)
+
+    .then(results => res.send(results.rows))
+    .catch(console.error);
+});
+
+app.delete('/api/v1/books/:id', (req, res) => {
+    console.log(req);
+    let SQL = `
+        DELETE FROM books WHERE book_id= ${req.params.id};
+        `;
+
+    client.query(SQL)
+
     .then(results => res.send(results.rows))
     .catch(console.error);
 });
