@@ -11,15 +11,6 @@ const app = express();
 const PORT = process.env.PORT;
 
 // Database Setup
-
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// I had to change the below from the above AND add this to the server terminal: 
-// FOR PAUL:
-// export DATABASE_URL=postgres://localhost:5432/books_app
-// FOR TRAVIS:
-// export DATABASE_URL=postgres://postgres:1234@localhost:5432/books_app
-
-// this is for cloud
 const client = new pg.Client(process.env.DATABASE_URL);
 
 
