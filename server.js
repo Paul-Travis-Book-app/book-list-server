@@ -11,8 +11,7 @@ const app = express();
 const PORT = process.env.PORT;
 
 // Database Setup
-const client = new pg.Client(`postgres://kedojwrbxzhisz:74624102c9b3e1b1dca3f12192be0d5797a717593950eac58583af5236121e2a@ec2-23-23-226-190.compute-1.amazonaws.com:5432/d3liq9nrbokkbd`);
-
+const client = new pg.Client(process.env.DATABASE_URL);
 
 client.connect();
 client.on('error', err => console.log(err));
