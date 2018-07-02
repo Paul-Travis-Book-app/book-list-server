@@ -46,11 +46,11 @@ app.post('/api/v1/books', (req, res) => {
     
     let values = [
         
-        req.param.title,
-        req.param.author,
-        req.param.isbn,
-        req.param.image_url,
-        req.param.description
+        req.body.title,
+        req.body.author,
+        req.body.isbn,
+        req.body.image_url,
+        req.body.description
 
 
     ];
@@ -77,7 +77,7 @@ app.put('/api/v1/books/:id', (req, res) => {
 
 
     let values = [
-        req.params.id,
+        req.body.id,
         req.body.title,
         req.body.author,
         req.body.isbn,
@@ -98,7 +98,7 @@ app.put('/api/v1/books/:id', (req, res) => {
 app.get('/api/v1/books/:id', (req, res) => {
     // console.log(req);
     let SQL = `
-        SELECT * FROM books WHERE book_id= ${req.params.id};
+        SELECT * FROM books WHERE book_id= ${req.body.id};
         `;
 
     client.query(SQL)
@@ -110,7 +110,7 @@ app.get('/api/v1/books/:id', (req, res) => {
 app.delete('/api/v1/books/:id', (req, res) => {
     // console.log(req);
     let SQL = `
-        DELETE FROM books WHERE book_id= ${req.params.id};
+        DELETE FROM books WHERE book_id= ${req.body.id};
         `;
 
     client.query(SQL)
